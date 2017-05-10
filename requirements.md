@@ -36,3 +36,11 @@
 * The system has the ability to print a top 10 movies based on: lowest average rating, highest average rating, rating-price index.
 * The system has the ability to ignore movies that have not yet received a rating.
 
+# Non-Functional Requirements
+
+* Hosted on Microsoft Azure Platform.
+* Written in Microsoft ASP.Net Core.
+* Uses ASP.Net MVC.
+* The system must be safe (OWASP top 10)
+* The system must me scalable.
+
