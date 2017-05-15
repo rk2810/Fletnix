@@ -1,9 +1,0 @@
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\bin\Debug\netcoreapp1.1\Fletnix.deps.json
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\bin\Debug\netcoreapp1.1\Fletnix.runtimeconfig.json
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\bin\Debug\netcoreapp1.1\Fletnix.runtimeconfig.dev.json
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\bin\Debug\netcoreapp1.1\Fletnix.dll
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\obj\Debug\netcoreapp1.1\Fletnix.csprojResolveAssemblyReference.cache
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\obj\Debug\netcoreapp1.1\Fletnix.AssemblyInfo.cs
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\bin\Debug\netcoreapp1.1\Fletnix.pdb
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\obj\Debug\netcoreapp1.1\Fletnix.dll
-e:\users\sander\documents\visual studio 2017\Projects\Fletnix\Fletnix\obj\Debug\netcoreapp1.1\Fletnix.pdb
