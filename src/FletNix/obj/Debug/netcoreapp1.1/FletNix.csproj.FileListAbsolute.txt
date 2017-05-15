@@ -1,9 +1,0 @@
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\bin\Debug\netcoreapp1.1\FletNix.deps.json
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\bin\Debug\netcoreapp1.1\FletNix.runtimeconfig.json
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\bin\Debug\netcoreapp1.1\FletNix.runtimeconfig.dev.json
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\bin\Debug\netcoreapp1.1\FletNix.dll
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\obj\Debug\netcoreapp1.1\FletNix.csprojResolveAssemblyReference.cache
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\obj\Debug\netcoreapp1.1\FletNix.AssemblyInfo.cs
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\bin\Debug\netcoreapp1.1\FletNix.pdb
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\obj\Debug\netcoreapp1.1\FletNix.dll
-e:\users\sander\documents\visual studio 2017\Projects\FletNix\FletNix\obj\Debug\netcoreapp1.1\FletNix.pdb
