@@ -26,3 +26,5 @@ CREATE TABLE MovieAwards (
 INSERT INTO MovieAwards VALUES (11, 'Oscar', 'Won', '7');
 INSERT INTO MovieAwards VALUES (11, 'BAFTA Film Awards', 'Won', '2');
 INSERT INTO MovieAwards VALUES (11, 'BAFTA Film Awards', 'Nominated', '3');
+
+UPDATE Movie SET URL = 'https://www.youtube.com/watch?v=87cUqFA3mnw'
