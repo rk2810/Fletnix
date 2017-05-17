@@ -28,12 +28,12 @@ namespace FletNix
         {
             services.AddMvc();
 
-            services.AddElm();
-
             services.AddDbContext<FLETNIXContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("FLETNIX"));
             });
+
+            services.AddElm();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -65,14 +65,14 @@ namespace FletNix
                 AuthenticationScheme = "oidc",
                 SignInScheme = "Cookies",
 
-                Authority = "http://localhost:5000",
+                Authority = Configuration["OpenIdConnectOptions:Authority"],
                 RequireHttpsMetadata = false,
 
-                ClientId = "fletnix",
-                ClientSecret = "secret",
+                ClientId = Configuration["OpenIdConnectOptions:ClientId"],
+                ClientSecret = Configuration["OpenIdConnectOptions:ClientSecret"],
 
                 ResponseType = "code id_token",
-                Scope = { "profile", "api1", "offline_access" },
+                Scope = { "profile" },
 
                 GetClaimsFromUserInfoEndpoint = true,
                 SaveTokens = true

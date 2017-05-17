@@ -23,10 +23,7 @@ namespace IdentityServer
 
         public static IEnumerable<ApiResource> GetApiResources()
         {
-            return new List<ApiResource>
-            {
-                new ApiResource("api1", "My API")
-            };
+            return new List<ApiResource>();
         }
 
 
@@ -51,8 +48,7 @@ namespace IdentityServer
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        IdentityServerConstants.StandardScopes.Profile
                     },
                     AllowOfflineAccess = true
                 }
