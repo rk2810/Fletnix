@@ -25,7 +25,6 @@
         <th>Price</th>
         <th>Url</th>
         <th>PreviousPartNavigation</th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -54,11 +53,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PreviousPartNavigation.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MovieId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MovieId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MovieId">Delete</a>
             </td>
         </tr>
     }

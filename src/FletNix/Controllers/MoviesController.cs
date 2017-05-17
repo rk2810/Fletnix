@@ -20,14 +20,10 @@ namespace FletNix.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Index(
-            string sortOrder,
-            string currentFilter,
-            string searchString,
-            int? page)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
             if (searchString != null)
@@ -51,7 +47,7 @@ namespace FletNix.Controllers
 
             switch (sortOrder)
             {
-                case "name_desc":
+                case "title_desc":
                     movies = movies.OrderByDescending(s => s.Title);
                     break;
                 default:
