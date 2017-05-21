@@ -17,10 +17,10 @@
 <table class="table">
     <thead>
     <tr>
-        <th><a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Title</a></th>
+        <th><a asp-action="Index" asp-route-sortOrder="title_desc" asp-route-currentFilter="@ViewData["CurrentFilter"]">Title</a></th>
         <th>Duration</th>
         <th>Description</th>
-        <th>PublicationYear</th>
+        <th><a asp-action="Index" asp-route-sortOrder="year_desc" asp-route-currentFilter="@ViewData["CurrentFilter"]">Publication Year</a></th>
         <th>CoverImage</th>
         <th>Price</th>
         <th>Url</th>

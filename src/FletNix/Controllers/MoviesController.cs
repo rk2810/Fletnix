@@ -24,6 +24,7 @@ namespace FletNix.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["YearSortParm"] = String.IsNullOrEmpty(sortOrder) ? "year_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 
             if (searchString != null)
@@ -48,11 +49,14 @@ namespace FletNix.Controllers
             switch (sortOrder)
             {
                 case "title_desc":
-                    movies = movies.OrderByDescending(s => s.Title);
-                    break;
+                    movies = movies.OrderByDescending(m => m.Title);
+                break;
+                case "year_desc":
+                    movies = movies.OrderByDescending(m => m.PublicationYear);
+                break;
                 default:
                     movies = movies.OrderBy(s => s.Title);
-                    break;
+                break;
             }
 
             int pageSize = 10;
@@ -69,7 +73,10 @@ namespace FletNix.Controllers
             }
 
             var movie = await _context.Movie
-                .Include(m => m.PreviousPartNavigation)
+                .Include(m => m.MovieDirector)
+                .Include(m => m.MovieCast)
+                .Include(m => m.MovieGenre)
+                .Include(m => m.MovieAwards)
                 .SingleOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
