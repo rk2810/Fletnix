@@ -23,48 +23,61 @@
     <div class="col-md-6">
         <table class="table">
             <tbody>
-            <tr>
-                <td><strong>Duration</strong></td>
-                <td>@Html.DisplayFor(model => model.Duration) minutes</td>
-            </tr>
-            <tr>
-                <td><strong>Description</strong></td>
-                <td>@Html.DisplayFor(model => model.Description)</td>
-            </tr>
-            <tr>
-                <td><strong>Year</strong></td>
-                <td>@Html.DisplayFor(model => model.PublicationYear)</td>
-            </tr>
+                <tr>
+                    <td><strong>Duration</strong></td>
+                    <td>@Html.DisplayFor(model => model.Duration) minutes</td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>@Html.DisplayFor(model => model.Description)</td>
+                </tr>
+                <tr>
+                    <td><strong>Year</strong></td>
+                    <td>@Html.DisplayFor(model => model.PublicationYear)</td>
+                </tr>
             </tbody>
         </table>
     </div>
     <div class="col-md-6">
         <table class="table">
             <tbody>
-            <tr>
-                <td><strong>Duration</strong></td>
-                <td>@ViewData.Model.Duration minutes</td>
-            </tr>
-            <tr>
-                <td><strong>Genres</strong></td>
-                <td>
-                    @foreach (MovieGenre genre in Model.MovieGenre)
-                    {
-                        @String.Concat(genre.GenreName, ", ")
-                        ;
-                    }
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Directors</strong></td>
-                <td>
-                    @foreach (MovieDirector director in Model.MovieDirector)
-                    {
-
-                    }
-                </td>
-            </tr>
+                <tr>
+                    <td><strong>Genres</strong></td>
+                    <td>
+                        @foreach (MovieGenre genre in Model.MovieGenre)
+                        {
+                            @String.Concat(genre.GenreName, ", ")
+                            ;
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Directors</strong></td>
+                    <td>
+                        @foreach (MovieDirector director in Model.MovieDirector)
+                        {
+                            @string.Concat(director.Person.Firstname, " ", director.Person.Lastname, ", ")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Price</strong></td>
+                    <td>&euro; @ViewData.Model.Price</td>
+                </tr>
             </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <td><strong>Cast</strong></td>
+                <td>
+                    @foreach (MovieCast cast in Model.MovieCast)
+                    {
+                        @string.Concat(cast.Person.Firstname, " ", cast.Person.Lastname, ", ")
+                    }
+                </td>
+            </tr>
         </table>
     </div>
 </div>

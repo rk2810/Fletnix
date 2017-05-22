@@ -74,9 +74,10 @@ namespace FletNix.Controllers
 
             var movie = await _context.Movie
                 .Include(m => m.MovieDirector)
+                    .ThenInclude(m => m.Person)
                 .Include(m => m.MovieCast)
+                    .ThenInclude(m => m.Person)
                 .Include(m => m.MovieGenre)
-                .Include(m => m.MovieAwards)
                 .SingleOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
