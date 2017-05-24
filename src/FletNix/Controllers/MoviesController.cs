@@ -22,42 +22,18 @@ namespace FletNix.Controllers
         [Authorize]
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
-            ViewData["YearSortParm"] = String.IsNullOrEmpty(sortOrder) ? "year_desc" : "";
-            ViewData["CurrentFilter"] = searchString;
-
-            if (searchString != null)
+            var movies = _context.Movie.GroupJoin(_context.CustomerFeedback, m => m.MovieId, cf => cf.MovieId, (m, cf) => new
             {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+                MovieId = m.MovieId,
+                Title = m.Title,
+                AverageRating = cf.DefaultIfEmpty(new CustomerFeedback
+                {
+                    Rating = 0
+                }).Average(f => f.Rating)
+            });
 
-            ViewData["CurrentFilter"] = searchString;
-
-            var movies = from s in _context.Movie
-                select s;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                movies = movies.Where(s => s.Title.Contains(searchString));
-            }
-
-            switch (sortOrder)
-            {
-                case "title_desc":
-                    movies = movies.OrderByDescending(m => m.Title);
-                break;
-                case "year_desc":
-                    movies = movies.OrderByDescending(m => m.PublicationYear);
-                break;
-                default:
-                    movies = movies.OrderBy(s => s.Title);
-                break;
-            }
+//            var movies = from s in _context.Movie
+//                select s;
 
             int pageSize = 10;
 
@@ -74,129 +50,18 @@ namespace FletNix.Controllers
 
             var movie = await _context.Movie
                 .Include(m => m.MovieDirector)
-                    .ThenInclude(m => m.Person)
+                .ThenInclude(m => m.Person)
                 .Include(m => m.MovieCast)
-                    .ThenInclude(m => m.Person)
+                .ThenInclude(m => m.Person)
                 .Include(m => m.MovieGenre)
                 .SingleOrDefaultAsync(m => m.MovieId == id);
+
             if (movie == null)
             {
                 return NotFound();
             }
 
             return View(movie);
-        }
-
-        // GET: Movies/Create
-        public IActionResult Create()
-        {
-            ViewData["PreviousPart"] = new SelectList(_context.Movie, "MovieId", "Title");
-            return View();
-        }
-
-        // POST: Movies/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,Title,Duration,Description,PublicationYear,CoverImage,PreviousPart,Price,Url")] Movie movie)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(movie);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewData["PreviousPart"] = new SelectList(_context.Movie, "MovieId", "Title", movie.PreviousPart);
-            return View(movie);
-        }
-
-        // GET: Movies/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var movie = await _context.Movie.SingleOrDefaultAsync(m => m.MovieId == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-            ViewData["PreviousPart"] = new SelectList(_context.Movie, "MovieId", "Title", movie.PreviousPart);
-            return View(movie);
-        }
-
-        // POST: Movies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,Title,Duration,Description,PublicationYear,CoverImage,PreviousPart,Price,Url")] Movie movie)
-        {
-            if (id != movie.MovieId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(movie);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MovieExists(movie.MovieId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            ViewData["PreviousPart"] = new SelectList(_context.Movie, "MovieId", "Title", movie.PreviousPart);
-            return View(movie);
-        }
-
-        // GET: Movies/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var movie = await _context.Movie
-                .Include(m => m.PreviousPartNavigation)
-                .SingleOrDefaultAsync(m => m.MovieId == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            return View(movie);
-        }
-
-        // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var movie = await _context.Movie.SingleOrDefaultAsync(m => m.MovieId == id);
-            _context.Movie.Remove(movie);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        private bool MovieExists(int id)
-        {
-            return _context.Movie.Any(e => e.MovieId == id);
         }
     }
 }
