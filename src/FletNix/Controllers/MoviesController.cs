@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FletNix.DAL;
 using FletNix.Helpers.Paging;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FletNix.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -12,35 +12,24 @@ namespace FletNix.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly FLETNIXContext _context;
+        private readonly IMovieRepository _movieRepository;
 
-        public MoviesController(FLETNIXContext context)
+        public MoviesController(IMovieRepository movieRepository)
         {
-            _context = context;    
+            this._movieRepository = movieRepository;
         }
 
         [Authorize]
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var movies = _context.Movie.GroupJoin(_context.CustomerFeedback, m => m.MovieId, cf => cf.MovieId, (m, cf) => new
-            {
-                MovieId = m.MovieId,
-                Title = m.Title,
-                AverageRating = cf.DefaultIfEmpty(new CustomerFeedback
-                {
-                    Rating = 0
-                }).Average(f => f.Rating)
-            });
-
-//            var movies = from s in _context.Movie
-//                select s;
+            var movies = this._movieRepository.GetMovieList().OrderByDescending(m => m.AverageRating);
 
             int pageSize = 10;
 
-            return View(await PaginatedList<Movie>.CreateAsync(movies.AsNoTracking(), page ?? 1, pageSize));
+            return View(await PaginatedList<MovieListItem>.CreateAsync(movies.AsNoTracking(), page ?? 1, pageSize));
         }
 
-        // GET: Movies/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,13 +37,7 @@ namespace FletNix.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .Include(m => m.MovieDirector)
-                .ThenInclude(m => m.Person)
-                .Include(m => m.MovieCast)
-                .ThenInclude(m => m.Person)
-                .Include(m => m.MovieGenre)
-                .SingleOrDefaultAsync(m => m.MovieId == id);
+            var movie = await _movieRepository.GetMovie((int) id);
 
             if (movie == null)
             {

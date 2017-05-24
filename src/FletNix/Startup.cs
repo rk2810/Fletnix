@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
+using FletNix.DAL;
 using FletNix.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,8 @@ namespace FletNix
             {
                 options.UseSqlServer(Configuration.GetConnectionString("FLETNIX"));
             });
+
+            services.AddScoped<IMovieRepository, MovieRepository>();
 
             services.AddElm();
         }
